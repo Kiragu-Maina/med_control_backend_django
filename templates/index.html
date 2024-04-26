@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rate Calculation Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+        .form-container {
+            display: none;
+        }
+
+        .form-container.show {
+            display: block;
+        }
+        .rate {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <h1>Rates Calculation</h1>
+        <label for="Component" id="Co">Select Component:</label>
+        <select id="component-select" name="Component">
+            <option value="">Select a component:</option>
+            <option value="concrete">Concrete</option>
+            
+        </select>
+        <div class="form-contai" id="concrete-select-inputs" style="display: none;">
+        <select id="concrete-select" name="Concrete">
+            <option value="">Select a concrete class:</option>
+            <option value="15">Class 15</option>
+            <option value="20">Class 20</option>
+            <option value="25">Class 25</option>
+            <option value="30">Class 30</option>
+        </select>
+        
+        </div>
+        <div class="form-container" id="concrete-form" style="display: none;">
+            <form method="POST" action="{% url 'rates' %}">
+                {% csrf_token %}
+                <input type="hidden" id="ConcreteClass" name="class">
+
+                
+
+                <label for="CementUnitsperTon">No. of cement bags:</label>
+                <input type="number" id="CementUnitsperTon" name="CementUnitsperTon" min="0" required>
+
+                <label for="SandUnitsperTon">No. of tonnes of sand:</label>
+                <input type="number" id="SandUnitsperTon" name="SandUnitsperTon" min="0" required>
+
+                <label for="AggregateUnitsperTon">No. of tonnes of Aggregate:</label>
+                <input type="number" id="AggregateUnitNosperTon" name="AggregateUnitsperTon" min="0" required>
+
+                <label for="num">Overheads:</label>
+                <input type="number" id="num" name="num" min="0" required>
+
+                <input type="submit" value="Calculate Rate">
+        </form>
+    </div>
+    <div class="rate">
+        <h2>Rate per cubic meter:</h2>
+        <p>{{ ratepersm }}</p>
+    </div>
+    <script>
+        const concreteSelect = document.getElementById("concrete-select");
+        const concreteForm = document.getElementById("concrete-form");
+        const concreteClassField = document.getElementById("ConcreteClass");
+        concreteSelect.addEventListener("change", (event) => {
+          if (event.target.value === "15" || event.target.value === "20" || event.target.value === "25" || event.target.value === "30") {
+                concreteClassField.value = event.target.value;
+              concreteForm.style.display = "block";
+              
+
+            } else {
+              concreteForm.style.display = "none";
+              concreteClassField.value = "";
+            }
+          });
+        const componentSelect = document.getElementById("component-select");
+        const concreteselectinputs = document.getElementById("concrete-select-inputs");
+       
+        componentSelect.addEventListener("change", (event) => {
+          if (event.target.value === "concrete") {
+            concreteselectinputs.style.display = "block";
+              
+
+            } else {
+              concreteselectinputs.style.display = "none";
+              
+            }
+          });
+        function showForm() {
+            const formContainer = document.getElementById("form-container");
+            formContainer.classList.add("show");
+        }
+    </script>
+</div>
+</div>
+</body>
+</html>
+

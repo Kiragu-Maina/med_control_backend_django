@@ -1,0 +1,52 @@
+<!-- navbar.html -->
+<style>
+    .navbar {
+        background-color: #A9A9A9;
+        width: 200px;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    .nav-link {
+        display: block;
+        padding: 10px;
+        font-size: 18px;
+        color: #FFFFFF;
+        text-decoration: none;
+         border: 1px solid gray;
+		  border-radius: 20px;
+		  padding: 10px;
+		  margin: 5px;
+		  text-decoration: none;
+		  color: black;
+    }
+    .home {
+    	padding: 30px;
+    	 display: block;
+    	 font-size: 20px;
+    	 margin: 5px;
+
+
+    }
+    .home:hover {
+        background-color: #555555;
+        color: white;
+
+    }
+
+    .nav-link:hover {
+        background-color: #555555;
+        color: white;
+
+    }
+</style>
+
+<nav class="navbar">
+
+	<a class="home" href="https://57c616b9.reacttodjango.pages.dev/">Home</a>
+    <a class="nav-link" href="{% url 'rates' %}">Rates</a>
+    <a class="nav-link" href="{% url 'shops' %}">Shops</a>
+
+    <a class="nav-link" href="#">PaaS</a>
+</nav>

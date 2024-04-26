@@ -1,0 +1,9 @@
+{% extends "oscar/base.html" %}
+
+{% block scripts %}
+{{ block.super }}
+{{ search_form.media }}
+<script>
+    $('#id_q').autocomplete('{% url "search:autocomplete" %}');
+</script>
+{% endblock %}

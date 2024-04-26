@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shop Inventory</title>
+	<style>
+	/* Add some basic styles */
+	body {
+		font-family: Arial, sans-serif;
+	}
+
+	table {
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	th, td {
+		padding: 8px;
+		text-align: left;
+		border-bottom: 1px solid #ddd;
+	}
+
+	th {
+		background-color: #f2f2f2;
+	}
+
+	tr:hover {
+		background-color: #f5f5f5;
+	}
+
+	.btn {
+		background-color: #4CAF50;
+		color: white;
+		border: none;
+		cursor: pointer;
+		padding: 8px 16px;
+	}
+
+	.btn:hover {
+		background-color: #3e8e41;
+	}
+
+	.active {
+		background-color: #4CAF50;
+		color: white;
+	}
+
+	/* Add some basic styles for the modal */
+	.modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0,0,0); /* Fallback color */
+		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+
+	/* Modal content */
+	.modal-content {
+		background-color: #fefefe;
+		margin: 10% auto; /* 10% from the top and centered */
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%; /* Could be more or less, depending on screen size */
+	}
+
+	/* Close button */
+	.close {
+		color: #aaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+		color: black;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	.container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+        }
+
+	</style>
+</head>
+<body>
+	{% include 'navbar.html' %}
+	<div class="container">
+	<h1>Shop Inventory</h1>
+	<table>
+		<thead>
+		  <tr>
+			<th>Shop ID</th>
+			<th>Shop Name</th>
+			<th>Location</th>
+			<th>Cement Price</th>
+			<th>Sand Price</th>
+			<th>Aggregate Price</th>
+			<th>Actions</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  {% for shop, inventory in inventory_data %}
+			<tr>
+			  <td>{{ shop.id }}</td>
+			  <td>{{ shop.shopname }}</td>
+			  <td>{{ shop.location }}</td>
+			  <td>{{ inventory.cement_price }}</td>
+			  <td>{{ inventory.sand_price }}</td>
+			  <td>{{ inventory.aggregate_price }}</td>
+			  <td><button class="btn" onclick="openModal({{ shop.id }})">Edit</button></td>
+			</tr>
+		  {% endfor %}
+		</tbody>
+	  </table>
+	  
+	
+	<!-- Modal -->
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h2>Edit Shop Inventory</h2>
+			<form method="post" action="{% url 'update_inventory' %}">
+				{% csrf_token %}
+				<input type="hidden" name="shop_id" id="shop_id">
+				<div class="form-group">
+					<label for="cement_price">Cement Price:</label>
+					<input type="number" step="0.01" name="cement_price" id="cement_price" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="sand_price">Sand Price:</label>
+					<input type="number" step="0.01" name="sand_price" id="sand_price" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="aggregate_price">Aggregate Price:</label>
+					<input type="number" step="0.01" name="aggregate_price" id="aggregate_price" class="form-control" required>
+				</div>
+				<button type="submit" class="btn btn-primary">Save</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+	<script>
+		// Get the modal
+		var modal = document.getElementById("myModal");
+
+		// Get the button that opens the modal
+		var btns = document.querySelectorAll(".edit-btn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks on the button, open the modal
+		btns.forEach(function (btn) {
+			btn.onclick = function () {
+				modal.style.display = "block";
+				var shopId = this.getAttribute("data-shop-id");
+				var cementPrice = this.getAttribute("data-cement-price");
+				var sandPrice = this.getAttribute("data-sand-price");
+				var aggregatePrice = this.getAttribute("data-aggregate-price");
+				document.getElementById("shop_id").value = shopId;
+				document.getElementById("cement_price").value = cementPrice;
+				document.getElementById("sand_price").value = sandPrice;
+				document.getElementById("aggregate_price").value = aggregatePrice;
+			};
+		});
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function () {
+			modal.style.display = "none";
+		};
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		};
+	</script>
+</body>
+</html>
