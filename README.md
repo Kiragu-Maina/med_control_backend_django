@@ -1,6 +1,6 @@
-## Django Server for Gun_Control
+## Django Server for Med_Control
 
-This Django project is a REST server that provides and saves data for firearm and gun control
+This Django project is a REST server that provides and saves data for pharmacy control
 
 ## Installation
 
