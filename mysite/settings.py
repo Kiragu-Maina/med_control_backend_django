@@ -41,7 +41,7 @@ CORS_ALLOWED_ORIGINS = [
     
 
 ]
-CSRF_TRUSTED_ORIGINS = ["https://medcontrolbackenddjango-production-7e4f.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["https://med-control-backend-django.onrender.com"]
 
 
 CORS_ALLOW_ALL_ORIGINS = True
