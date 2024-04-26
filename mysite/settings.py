@@ -162,7 +162,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://postgres_p4ml_user:da2uZ5xsOCVVsESuTVw1g12p1QnibNxZ@dpg-colrb2q1hbls73955oag-a/postgres_p4ml',       
+        default='postgres://postgres_p4ml_user:P3kLGNp16Gz3yUfXj0DsjaYB59cqq0Ce@dpg-colt2i21hbls7396cha0-a/postgres_p4ml_tk39',       
         conn_max_age=600
         )}
 # DATABASES = {
