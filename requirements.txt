@@ -1,5 +1,7 @@
 gunicorn==20.1.0
+uvicorn
 psycopg2_binary
+dj-database-url
 Werkzeug==2.3.6
 asgiref==3.7.2
 async-timeout==4.0.2
